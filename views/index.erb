@@ -1,0 +1,56 @@
+<section>
+	<h3>Create New Scipt!</h3>
+	<form action="/newScript" name="NEWSCRIPT" method="post">
+		<input type="text" name="title" placeholder="Title of your scipt"><br>
+		<input type="text" name="description" placeholder="Decribe your script"><br>
+		<input type="text" name="keyword" placeholder="Keyword to access the script"><br>
+		<input type="text" name="slides_url" placeholder="URL of your googleslide"><br>
+		<div id="input_pluralBox">
+			<div id="input_plural">
+				<input type="text" name="ctbt_0" class="ctbt" placeholder="Add contributor">
+				<input type="button" value="＋" class="add pluralBtn">
+				<%# <input type="button" value="－" class="del pluralBtn"> %>
+			</div>
+		</div>
+		<input type="submit" id="new-script" value="Submit">
+		<%# <button id="new-script">test</button> %>
+	</form>
+
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>TITLE</th>
+					<th>Description</th>
+					<th>Contributors</th>
+					<th>Keyword</th>
+				</tr>
+			</thead>
+			<tbody>
+					<% if !current_user.nil? %>
+					logged in
+						<% if !@scripts.empty? %>
+							<% @scripts.each do |script| %>
+								<tr>
+									<td><a href="/view/<%= script.id %>"><%= script.title %></a></td>
+									<td><%= script.description %></td>
+									<td>
+										<% contributors = Contributor.where(scripts_id: script.id) %>
+										<% contributors.each do |contributor| %>
+											<p><%= contributor.name %></p>
+										<% end %>
+									</td>
+									<td><%= script.keyword %></td>
+								</tr>
+							<% end %>
+						<% end %>
+					<% end %>
+				<tr>
+					<td colspan="4">
+						<a href="/">New Task</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>

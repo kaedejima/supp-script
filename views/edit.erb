@@ -1,0 +1,28 @@
+<section>
+  <% if !current_user.nil? %>
+    <% @scripts.each do |script| %>
+      <h2>TITLE: <%= script.title %></h2>
+      <h4>Description: <%= script.description %></h4>
+      <a href="/save/<%= script.id %>"><button>SAVE</button><a>
+    <% end %>
+  <% end %>
+  <div>
+		<table>
+			<thead>
+				<tr>
+					<th>Num</th>
+					<th>Role</th>
+					<th>Line</th>
+				</tr>
+			</thead>
+			<tbody>
+        <% @lines.each do |line| %>
+          <tr>
+            <td><%= line.num %></td>
+            <td><%= line.contributor.name %></td>
+          </tr>
+        <% end %>
+			</tbody>
+		</table>
+	</div>
+</section>
