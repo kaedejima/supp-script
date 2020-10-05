@@ -28,7 +28,7 @@ def authorize
     url = authorizer.get_authorization_url base_url: OOB_URI
     puts "Open the following URL in the browser and enter the " \
          "resulting code after authorization:\n" + url
-    code = gets
+    code = "4/4wF43OGk9B8zTSrva6Gpmgxx5EpqiZQmD934c-y8znUonoTiyU6ntKA" # gets
     credentials = authorizer.get_and_store_credentials_from_code(
       user_id: user_id, code: code, base_url: OOB_URI
     )
@@ -37,15 +37,15 @@ def authorize
 end
 
 # Initialize the API
-service = Google::Apis::SlidesV1::SlidesService.new
-service.client_options.application_name = APPLICATION_NAME
-service.authorization = authorize
+# service = Google::Apis::SlidesV1::SlidesService.new
+# service.client_options.application_name = APPLICATION_NAME
+# service.authorization = authorize
 
-# Prints the number of slides and elements in a sample presentation:
-# https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
-presentation_id = "1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc"
-presentation = service.get_presentation presentation_id
-puts "The presentation contains #{presentation.slides.count} slides:"
-presentation.slides.each_with_index do |slide, i|
-  puts "- Slide \##{i + 1} contains #{slide.page_elements.count} elements."
-end
+# # Prints the number of slides and elements in a sample presentation:
+# # https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
+# presentation_id = "1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc"
+# presentation = service.get_presentation presentation_id
+# puts "The presentation contains #{presentation.slides.count} slides:"
+# presentation.slides.each_with_index do |slide, i|
+#   puts "- Slide \##{i + 1} contains #{slide.page_elements.count} elements."
+# end

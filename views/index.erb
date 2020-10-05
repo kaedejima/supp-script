@@ -1,10 +1,29 @@
 <section>
+	<%# <div>
+		<form action="/test" name="TEST" method="post">
+			<input type="text" name="test_url" placeholder="URL of your googleslide">
+			<input type="submit" value="Submit">
+		</form>
+	</div> %>
+	<div>
+		<%# <% @presentation.slides.each_with_index do |slide, i| %>
+  	<%# <%= slide.page_elements.count %>
+
+  	<%# <h3>The title of this presentation is <%= @presentation.title %></h3> %>
+		<%# <h3>This presentation contains <%= @presentation.slides.count %> slides</h3> %>
+		<%# <p><%= @page %> </p> %>
+		<%# <img src="<%= @thumbnail.content_url %>"></img> %>
+	</div>
 	<h3>Create New Scipt!</h3>
 	<form action="/newScript" name="NEWSCRIPT" method="post">
+		<label for="title">Title of your script</label>
 		<input type="text" name="title" placeholder="Title of your scipt"><br>
+		<label for="description">Description of your script</label>
 		<input type="text" name="description" placeholder="Decribe your script"><br>
+		<label for="keyword">Keyword of your script</label>
 		<input type="text" name="keyword" placeholder="Keyword to access the script"><br>
-		<input type="text" name="slides_url" placeholder="URL of your googleslide"><br>
+		<label for="presentation_url">URL of your script</label>
+		<input type="text" name="presentation_url" placeholder="URL of your googleslide"><br>
 		<div id="input_pluralBox">
 			<div id="input_plural">
 				<input type="text" name="ctbt_0" class="ctbt" placeholder="Add contributor">

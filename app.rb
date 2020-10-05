@@ -4,29 +4,13 @@ require 'sinatra/reloader' if development?
 require 'pry' if development?
 require 'sinatra/activerecord'
 require './models.rb'
+require './googleslide.rb'
 
-require "google/apis/slides_v1"
-require "googleauth"
-require "googleauth/stores/file_token_store"
-require "fileutils"
+service = Google::Apis::SlidesV1::SlidesService.new
+service.client_options.application_name = APPLICATION_NAME
+service.authorization = authorize
 
-OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
-APPLICATION_NAME = "Google Slides API Ruby Quickstart".freeze
-CREDENTIALS_PATH = "credentials.json".freeze
-# The file token.yaml stores the user's access and refresh tokens, and is
-# created automatically when the authorization flow completes for the first
-# time.
-TOKEN_PATH = "token.yaml".freeze
-SCOPE = Google::Apis::SlidesV1::AUTH_PRESENTATIONS_READONLY
-
-# API KEY
-# 'AIzaSyDpZO6Qf1fFRygWLefiNKjwvIj4luIq-W0'
-
-# google slide api
-## Client ID
-### 375926303724-iu16hqbq46hudgp046rh461t4j582nc3.apps.googleusercontent.com
-## Client Secrete
-### 2Zi8y4U5fKzAXdqP9tVCTXqJ
+# https://docs.google.com/presentation/d/1DzieWq9aHR5_g_Cpnd5GtFNIfBosuwU9EXx6RwXjXCo/edit#slide=id.g9a70d324ed_2_50
 
 enable :sessions
 
@@ -36,12 +20,30 @@ helpers do
   end
 end
 
+# post '/test' do
+#   @presentation_id = getPresentationId(params[:test_url])
+#   redirect '/'
+# end
+
 get '/' do
+  # presentation_id = "1DzieWq9aHR5_g_Cpnd5GtFNIfBosuwU9EXx6RwXjXCo"
+  # page_object_id = 'g9a70d324ed_2_66'
+  # @presentation = service.get_presentation(presentation_id)
+  # @page = service.get_presentation_page(presentation_id, page_object_id)
+  # @thumbnail = service.get_presentation_page_thumbnail(presentation_id, page_object_id, thumbnail_properties_thumbnail_size: 'SMALL')
+
   if !current_user.nil?
     @scripts = Script.where(user_id: current_user.id)
-    p '----------' + Script.where(user_id: current_user.id)[0].to_s
   end
   erb :index
+
+  # <% @presentation.slides.each_with_index do |slide, i| %>
+  # 	<%= slide.page_elements.count %>
+  # <h3>The title of this presentation is <%= @presentation.title %></h3>
+	# 	<h3>This presentation contains <%= @presentation.slides.count %> slides</h3>
+	# 	<p><%= @page %> </p>
+	# 	<p><%= @thumbnail %> </p>
+
 end
 
 get '/signup' do
@@ -77,56 +79,101 @@ post '/signin' do
   redirect '/'
 end
 
-# post '/getSlide' do
-#   if params[:slide_url]
-#     url = params[:slide_url]
-#     # slide_id = (url.match('/presentation/d/([a-zA-Z0-9-_]+)'))
-#     # slide_id = '1DzieWq9aHR5_g_Cpnd5GtFNIfBosuwU9EXx6RwXjXCo'
-#     uri = URI('https://slides.googleapis.com/v1/presentations/')
-#     uri.query = URI.encode_www_form({
-#       presentationId: slide_id
-#     })
-#     res = Net::HTTP.get_response(uri)
-#     json = JSON.parse(res.body)
-#     # binding.pry
-#   end
-#   redirect '/'
-# end
+post '/getSlide' do
+  if params[:slide_url]
+    url = params[:slide_url]
+    presentation_id = getPresentationId(url)
+    binding.pry
+  end
+  redirect '/'
+end
 
 post '/newScript' do
   if !current_user.nil?
     ctbt_count = params[:ctbt_count].to_i
-    script = Script.create(
+    url = params[:presentation_url]
+    presentation_id = getPresentationId(url)
+    script = Script.create!(
       user_id: current_user.id,
       title: params[:title],
       description: params[:description],
       keyword: params[:keyword],
-      slides_url: params[:slides_url]
+      presentation_id: presentation_id
     )
-    p '----------saved - script----------'
-    ctbt_count.times do |num|
-      param_name = 'ctbt_'+ num.to_s
+    ctbt_count.times do |i|
+      param_name = 'ctbt_'+ i.to_s
       name = params[param_name]
-      ctbt = Contributor.create(
+      contributor = Contributor.create!(
         name: name,
         scripts_id: script.id
       )
-      p ctbt.name
-      p '----------saved - ctbt----------'
+      # binding.pry
     end
-    # binding.pry
+
+    # # get presentation slide count
+    presentation = service.get_presentation(script.presentation_id)
+    # # create lines for each slides
+    presentation.slides.each_with_index do |page, i|
+      line = Line.create!(
+        scripts_id: script.id,
+        contributors_id: Contributor.where(scripts_id: script.id).first.id,
+        body: ""
+      )
+    end
   end
   redirect '/'
 end
 
 get '/view/:id' do
-  @scripts = Script.where(id: params[:id])
+  @script = Script.where(id: params[:id]).first
   @lines = Line.where(scripts_id: params[:id])
+  @contributors = Contributor.where(scripts_id: params[:id])
+  @presentation = service.get_presentation(@script.presentation_id)
+  @thumbnails = Array[]
+
+  @presentation.slides.each_with_index do |slide, i|
+    # @urls.push(script.object_id_prop)
+    @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
+  end
+  # @presentation = service.get_presentation(@presentation_id)
+  # @page = service.get_presentation_page(@scripts.presentation_id, page_object_id)
+  # @thumbnail = service.get_presentation_page_thumbnail(presentation_id, page_object_id, thumbnail_properties_thumbnail_size: 'SMALL')
+  # binding.pry
   erb :view
 end
 
 get '/edit/:id' do
-  @scripts = Script.where(id: params[:id])
+  @script = Script.where(id: params[:id]).first
   @lines = Line.where(scripts_id: params[:id])
+  @contributors = Contributor.where(scripts_id: params[:id])
+  @presentation = service.get_presentation(@script.presentation_id)
+  @thumbnails = Array[]
+
+  @presentation.slides.each_with_index do |slide, i|
+    # @urls.push(script.object_id_prop)
+    @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
+  end
+  # @presentation.slides.each_with_index do |slide, i|
+  #   @thumbnail = service.get_presentation_page_thumbnail(script.presentation_id,
+  # end
+  # binding.pry
   erb :edit
+end
+
+get '/update/:id/auto-save' do
+  if params[:role_body] == 'role'
+    line = Line.find(params[:id]).contributors_id
+    line.review = Contributor.find_by(name: params[:input_value]).id
+    line.save
+  elsif params[:role_body] == 'body'
+    line = Line.find(params[:id]).body
+    line.review = params[:input_value]
+    line.save
+  end
+end
+
+def getPresentationId(url)
+  idx = url.index("/presentation/d/").to_i + 16
+  presentation_id = url[(idx),44]
+  return presentation_id
 end

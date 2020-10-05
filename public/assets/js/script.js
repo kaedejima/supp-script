@@ -1,19 +1,46 @@
+var idNo = 1;
+window.onload = function load() {
+  // idNo = 1;
+}
 $(function () {
-  var idNo = 1;
   $(document).on("click", ".add", function () {
     $(this).parent().clone(true)
       .removeAttr("id")
       .removeClass("notDisp")
       .find("input[name=ctbt_0]")
-      .attr("name", "ctbt_" + idNo).end().insertAfter($(this).parent());
+      .attr("name", "ctbt_" + idNo.toString())
+      .end()
+      .insertAfter($(this).parent());
     idNo++;
+  });
+});
+
+$(document).ready(function () {
+  $(".auto-save").blur(function (a) {
+    let input_value = $(this).val();
+    let element_class = $(this).attr('class').substr(-4, 4);
+    let element_id = $(this).attr('id');
+    let url_id = $('#id_link').attr('href');
+    console.log(url_id);
+    // console.log("input val: " + input_value.toString() + '\n class: ' + element_class + '\n id: ' + element_id);
+    // alert(this.text());
+    $.ajax(url_id + "/auto-save", {
+      type: "GET",
+      data: {
+        line_id: element_id,
+        role_body: element_class,
+        input_value: input_value
+      },
+      datatype: 'json'
+    })
+    alert('saved');
   });
 });
 
 $(document).on("click", "#new-script", function () {
   let ctbtCount = document.querySelectorAll('.ctbt').length;
   make_hidden('ctbt_count', ctbtCount, 'NEWSCRIPT');
-  alert('number of contributors are: ' + ctbtCount);
+  // alert('number of contributors are: ' + ctbtCount);
 });
 
 $(document).on("click", "#login-btn", function () {

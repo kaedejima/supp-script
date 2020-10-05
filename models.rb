@@ -22,9 +22,9 @@ class Script < ActiveRecord::Base
   validates :description,
     presence: true
   validates :keyword,
-    presence: true,
-    length: { in: 5..10 }
-  validates :slides_url,
+    presence: true
+    # length: { in: 5..10 }
+  validates :presentation_id,
     presence: true
   belongs_to :user
   has_many :contributors

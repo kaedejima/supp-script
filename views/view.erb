@@ -1,25 +1,33 @@
 <section>
   <% if !current_user.nil? %>
-    <% @scripts.each do |script| %>
-      <h2>TITLE: <%= script.title %></h2>
-      <h4>Description: <%= script.description %></h4>
-      <a href="/edit/<%= script.id %>"><button>EDIT</button></a>
+    <h2>TITLE: <%= @script.title %></h2>
+    <h4>DESCRIPTION: <%= @script.description %></h4>
+    <p>Presentation ID: <%= @script.presentation_id %></p>
+    <p><%= @presentation.slides.count %> slides</p>
+    <a href="/edit/<%= @script.id %>"><button>EDIT</button></a>
+    <h4>CONTRIBUTORS(<%= @contributors.count %>)</h4>
+    <% @contributors.each do |contributor| %>
+      <p><%= contributor.name %></p>
     <% end %>
+
   <% end %>
   <div>
 		<table>
 			<thead>
 				<tr>
 					<th>Num</th>
+          <th>Thumbnail</th>
 					<th>Role</th>
 					<th>Line</th>
 				</tr>
 			</thead>
 			<tbody>
-        <% @lines.each do |line| %>
+        <% @lines.each_with_index do |line, i| %>
           <tr>
-            <td><%= line.num %></td>
-            <td><%= line.contributor.name %></td>
+            <td><%= line.id %></td>
+            <td><img src="<%= @thumbnails[i] %>"></img></td>
+            <td><%= line.contributors_id %></td>
+            <td><%= line.body %></td>
           </tr>
         <% end %>
 			</tbody>
