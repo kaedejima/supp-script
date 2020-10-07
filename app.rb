@@ -111,12 +111,21 @@ post '/newScript' do
     end
     # # get presentation slide count
     presentation = service.get_presentation(script.presentation_id)
+    thumbnails = Array[]
+    presentation.slides.each_with_index do |slide, i|
+      thumbnails.push(service.get_presentation_page_thumbnail(
+        script.presentation_id,
+        slide.object_id_prop,
+        thumbnail_properties_thumbnail_size: 'SMALL')
+        .content_url)
+    end
     # # create lines for each slides
     presentation.slides.each_with_index do |page, i|
       line = Line.create!(
         scripts_id: script.id,
         contributors_id: Contributor.where(scripts_id: script.id).first.id,
         order_num: i,
+        thumbnail_url: thumbnails[i],
         body: ""
       )
     end
@@ -129,16 +138,11 @@ get '/view/:id' do
   @lines = Line.where(scripts_id: params[:id])
   @contributors = Contributor.where(scripts_id: params[:id])
   @presentation = service.get_presentation(@script.presentation_id)
-  @thumbnails = Array[]
+  # @thumbnails = Array[]
 
-  @presentation.slides.each_with_index do |slide, i|
-    # @urls.push(script.object_id_prop)
-    @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
-  end
-  # @presentation = service.get_presentation(@presentation_id)
-  # @page = service.get_presentation_page(@scripts.presentation_id, page_object_id)
-  # @thumbnail = service.get_presentation_page_thumbnail(presentation_id, page_object_id, thumbnail_properties_thumbnail_size: 'SMALL')
-  # binding.pry
+  # @presentation.slides.each_with_index do |slide, i|
+  #   @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
+  # end
   erb :view
 end
 
@@ -147,16 +151,12 @@ get '/edit/:id' do
   @lines = Line.where(scripts_id: params[:id])
   @contributors = Contributor.where(scripts_id: params[:id])
   @presentation = service.get_presentation(@script.presentation_id)
-  @thumbnails = Array[]
+  # @thumbnails = Array[]
 
-  @presentation.slides.each_with_index do |slide, i|
-    # @urls.push(script.object_id_prop)
-    @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
-  end
   # @presentation.slides.each_with_index do |slide, i|
-  #   @thumbnail = service.get_presentation_page_thumbnail(script.presentation_id,
+  #   # @urls.push(script.object_id_prop)
+  #   @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
   # end
-  # binding.pry
   erb :edit
 end
 
