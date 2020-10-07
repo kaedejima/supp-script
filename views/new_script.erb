@@ -1,0 +1,22 @@
+<section>
+	<div class="brown-box">
+		<h3>Create New Scipt!</h3>
+		<form action="/newScript" name="NEWSCRIPT" method="post">
+			<%# <label for="title">Title of your script</label> %>
+			<input type="text" name="title" placeholder="Title of your scipt"><br>
+			<%# <label for="description">Description of your script</label> %>
+			<input type="text" name="description" placeholder="Decribe your script"><br>
+			<%# <label for="keyword">Keyword of your script</label> %>
+			<input type="text" name="keyword" placeholder="Keyword to access the script"><br>
+			<%# <label for="presentation_url">URL of your script</label> %>
+			<input type="text" name="presentation_url" placeholder="URL of your googleslide"><br>
+			<div id="input_pluralBox">
+				<div id="input_plural">
+					<input type="text" name="ctbt_0" class="ctbt" placeholder="Add contributor">
+					<input type="button" value="＋" class="add pluralBtn">
+				</div>
+			</div>
+			<input type="submit" id="new-script" value="CREATE">
+		</form>
+	</div>
+</section>

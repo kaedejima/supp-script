@@ -1,0 +1,37 @@
+<section>
+	<div>
+		<%# <img src="https://api.adorable.io/avatars/284/abott@adorable.png"> %>
+	</div>
+	<div>
+  <h3><%= current_user.name %>'s scripts</h3>
+		<table class="table">
+			<thead  class="bg-brown">
+				<tr>
+					<th>TITLE</th>
+					<th>Description</th>
+					<th>Contributors</th>
+					<th>Keyword</th>
+				</tr>
+			</thead>
+			<tbody>
+					<% if !current_user.nil? %>
+						<% if !@scripts.empty? %>
+							<% @scripts.each do |script| %>
+								<tr>
+									<td><a href="/view/<%= script.id %>"><%= script.title %></a></td>
+									<td><%= script.description %></td>
+									<td>
+										<% contributors = Contributor.where(scripts_id: script.id) %>
+										<% contributors.each do |contributor| %>
+											<p><%= contributor.name %></p>
+										<% end %>
+									</td>
+									<td><%= script.keyword %></td>
+								</tr>
+							<% end %>
+						<% end %>
+					<% end %>
+			</tbody>
+		</table>
+	</div>
+</section>

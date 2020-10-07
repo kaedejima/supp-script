@@ -54,6 +54,7 @@ post '/signin' do
   user = User.find_by(name: params[:name])
   if user && user.authenticate(params[:password])
     session[:user] = user.id
+    # サインインした時に、そのユーザーが持っているスクリプトをもう一度読み込んでサムネを有効にする必要がある。
   end
   redirect '/'
 end
@@ -62,9 +63,17 @@ post '/getSlide' do
   if params[:slide_url]
     url = params[:slide_url]
     presentation_id = getPresentationId(url)
-    binding.pry
+    # binding.pry
   end
   redirect '/'
+end
+
+get '/newScript' do
+  if !current_user.nil?
+    erb :new_script
+  elsif
+    redirect '/'
+  end
 end
 
 post '/newScript' do
@@ -79,7 +88,7 @@ post '/newScript' do
       keyword: params[:keyword],
       presentation_id: presentation_id
     )
-    binding.pry
+    # binding.pry
     ctbt_count.times do |i|
       param_name = 'ctbt_'+ i.to_s
       name = params[param_name]
@@ -136,6 +145,15 @@ get '/update/:id/auto-save' do
     line.body = params[:input_value]
   end
   line.save
+end
+
+get '/cardview' do
+  if !current_user.nil?
+    @scripts = Script.where(user_id: current_user.id)
+    erb :cardview
+  elsif
+    redirect '/'
+  end
 end
 
 def getPresentationId(url)

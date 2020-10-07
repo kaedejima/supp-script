@@ -1,0 +1,97 @@
+body {
+  background-color: rgba(242, 242, 242);
+  color: rgba(107, 100, 93);
+}
+
+nav {
+  height: 80px;
+  padding-top: 15px;
+}
+
+nav * {
+  margin: 0px;
+}
+
+.navbar-item {
+  text-align: end;
+}
+
+.bg-brown {
+  background-color: rgba(107, 100, 93);
+  color: rgba(242, 242, 242);
+}
+
+.bg-red {
+  background-color: rgba(255, 105, 105);
+  color: rgba(242, 242, 242);
+}
+
+.bg-white {
+  background-color: rgba(242, 242, 242);
+  color: rgba(107, 100, 93);
+}
+
+a.bg-brown:hover {
+  color: #ffcb2d !important;
+}
+
+a.bg-red:hover {
+  color: rgba(107, 100, 93);
+}
+
+a.bg-white:hover {
+  color: rgba(255, 105, 105);
+}
+
+
+nav .bg-red {
+  padding: 10px 20px !important;
+  border-radius: 15px;
+}
+
+.brown-box {
+  background-color: rgba(107, 100, 93);
+  color: rgba(242, 242, 242);
+  min-width: 300px;
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+::placeholder {
+  color: rgba(242, 242, 242);
+}
+
+.brown-box h1 {
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.brown-box input {
+  background-color: rgba(107, 100, 93);
+  color: rgba(242, 242, 242);
+  width: 300px;
+  border: none;
+  box-shadow: inset 0px 2px 2px 3px rgba(75, 67, 59, .3);
+  border-radius: 5px;
+  padding: 10px 20px;
+  /* border-bottom: solid 2px #ffcb2d; */
+  margin-bottom: 20px;
+}
+
+.brown-box input[type="button"] {
+  width: auto;
+  box-shadow: inset 0px 2px 2px 3px rgba(75, 67, 59, .3);
+
+}
+
+.brown-box .ctbt {
+  width: 240px;
+}
+
+.brown-box input[type="submit"] {
+  background-color: rgba(255, 105, 105);
+  box-shadow: 0px 2px 2px 3px rgba(107, 100, 93);
+}

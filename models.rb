@@ -17,8 +17,7 @@ end
 
 class Script < ActiveRecord::Base
   validates :title,
-    presence: true,
-    format: { with: /\A\w+\z/ }
+    presence: trues
   validates :description,
     presence: true
   validates :keyword,

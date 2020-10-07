@@ -7,7 +7,7 @@
     <p><%= @presentation.slides.count %> slides</p>
     <a href="/view/<%= @script.id %>" ><button>FINISH EDIT</button></a>
     <a href="/update/<%= @script.id %>" id="id_link"></a>
-    <h4>CONTRIBUTORS(<%= @contributors.count %>)</h4>
+    <h4>CONTRIBUTORS <span class="badge"><%= @contributors.count %></span> </h4>
     <% @contributors.each do |contributor| %>
       <p><%= contributor.name %></p>
     <% end %>
