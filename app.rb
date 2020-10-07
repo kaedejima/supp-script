@@ -10,8 +10,6 @@ service = Google::Apis::SlidesV1::SlidesService.new
 service.client_options.application_name = APPLICATION_NAME
 service.authorization = authorize
 
-# https://docs.google.com/presentation/d/1DzieWq9aHR5_g_Cpnd5GtFNIfBosuwU9EXx6RwXjXCo/edit#slide=id.g9a70d324ed_2_50
-
 enable :sessions
 
 helpers do
@@ -20,30 +18,11 @@ helpers do
   end
 end
 
-# post '/test' do
-#   @presentation_id = getPresentationId(params[:test_url])
-#   redirect '/'
-# end
-
 get '/' do
-  # presentation_id = "1DzieWq9aHR5_g_Cpnd5GtFNIfBosuwU9EXx6RwXjXCo"
-  # page_object_id = 'g9a70d324ed_2_66'
-  # @presentation = service.get_presentation(presentation_id)
-  # @page = service.get_presentation_page(presentation_id, page_object_id)
-  # @thumbnail = service.get_presentation_page_thumbnail(presentation_id, page_object_id, thumbnail_properties_thumbnail_size: 'SMALL')
-
   if !current_user.nil?
     @scripts = Script.where(user_id: current_user.id)
   end
   erb :index
-
-  # <% @presentation.slides.each_with_index do |slide, i| %>
-  # 	<%= slide.page_elements.count %>
-  # <h3>The title of this presentation is <%= @presentation.title %></h3>
-	# 	<h3>This presentation contains <%= @presentation.slides.count %> slides</h3>
-	# 	<p><%= @page %> </p>
-	# 	<p><%= @thumbnail %> </p>
-
 end
 
 get '/signup' do
@@ -138,11 +117,6 @@ get '/view/:id' do
   @lines = Line.where(scripts_id: params[:id])
   @contributors = Contributor.where(scripts_id: params[:id])
   @presentation = service.get_presentation(@script.presentation_id)
-  # @thumbnails = Array[]
-
-  # @presentation.slides.each_with_index do |slide, i|
-  #   @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
-  # end
   erb :view
 end
 
@@ -151,17 +125,11 @@ get '/edit/:id' do
   @lines = Line.where(scripts_id: params[:id])
   @contributors = Contributor.where(scripts_id: params[:id])
   @presentation = service.get_presentation(@script.presentation_id)
-  # @thumbnails = Array[]
-
-  # @presentation.slides.each_with_index do |slide, i|
-  #   # @urls.push(script.object_id_prop)
-  #   @thumbnails.push(service.get_presentation_page_thumbnail(@script.presentation_id, slide.object_id_prop, thumbnail_properties_thumbnail_size: 'SMALL').content_url)
-  # end
   erb :edit
 end
 
 get '/update/:id/auto-save' do
-  line = Line.find(params[:id])
+  line = Line.where(scripts_id: params[:id], order_num: params[:element_id])[0]
   if params[:role_body] == 'role'
     line.contributors_id = Contributor.find_by(name: params[:input_value]).id
   elsif params[:role_body] == 'body'

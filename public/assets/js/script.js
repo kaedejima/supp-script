@@ -18,7 +18,9 @@ $(function () {
 $(document).ready(function () {
   $(".auto-save").blur(function (a) {
     let input_value = $(this).val();
+    // body or role?
     let element_class = $(this).attr('class').substr(-4, 4);
+    // order_num is the id
     let element_id = parseInt($(this).attr('id'));
     let url_id = $('#id_link').attr('href');
     console.log(url_id + "/auto-save");
@@ -26,7 +28,7 @@ $(document).ready(function () {
     $.ajax(url_id + "/auto-save", {
       type: "GET",
       data: {
-        line_id: element_id,
+        element_id: element_id,
         role_body: element_class,
         input_value: input_value
       },
