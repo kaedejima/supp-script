@@ -24,9 +24,9 @@
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
           <tr>
-            <td><%= line.id %></td>
+            <td><%= line.order_num+1 %></td>
             <td><img src="<%= @thumbnails[i] %>"></img></td>
-            <td><%= line.contributors_id %></td>
+            <td><p><%= Contributor.find(line.contributors_id).name %></p></td>
             <td><%= line.body %></td>
           </tr>
         <% end %>

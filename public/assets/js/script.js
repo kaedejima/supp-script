@@ -19,11 +19,10 @@ $(document).ready(function () {
   $(".auto-save").blur(function (a) {
     let input_value = $(this).val();
     let element_class = $(this).attr('class').substr(-4, 4);
-    let element_id = $(this).attr('id');
+    let element_id = parseInt($(this).attr('id'));
     let url_id = $('#id_link').attr('href');
-    console.log(url_id);
-    // console.log("input val: " + input_value.toString() + '\n class: ' + element_class + '\n id: ' + element_id);
-    // alert(this.text());
+    console.log(url_id + "/auto-save");
+    console.log("input val: " + input_value + '\n class: ' + element_class + '\n id: ' + element_id);
     $.ajax(url_id + "/auto-save", {
       type: "GET",
       data: {
@@ -33,14 +32,13 @@ $(document).ready(function () {
       },
       datatype: 'json'
     })
-    alert('saved');
+    // alert('saved' + input_value);
   });
 });
 
 $(document).on("click", "#new-script", function () {
   let ctbtCount = document.querySelectorAll('.ctbt').length;
   make_hidden('ctbt_count', ctbtCount, 'NEWSCRIPT');
-  // alert('number of contributors are: ' + ctbtCount);
 });
 
 $(document).on("click", "#login-btn", function () {
@@ -62,14 +60,3 @@ function make_hidden(name, value, formname) {
     document.forms[0].appendChild(q);
   }
 }
-
-// $(document).on("click", ".add", function () {
-//   $(this).parent().clone(true).insertAfter($(this).parent());
-// });
-
-// $(document).on("click", ".del", function () {
-//   var target = $(this).parent();
-//   if (target.parent().children().length > 1) {
-//     target.remove();
-//   }
-// });

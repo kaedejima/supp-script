@@ -100,6 +100,7 @@ post '/newScript' do
       keyword: params[:keyword],
       presentation_id: presentation_id
     )
+    binding.pry
     ctbt_count.times do |i|
       param_name = 'ctbt_'+ i.to_s
       name = params[param_name]
@@ -107,9 +108,7 @@ post '/newScript' do
         name: name,
         scripts_id: script.id
       )
-      # binding.pry
     end
-
     # # get presentation slide count
     presentation = service.get_presentation(script.presentation_id)
     # # create lines for each slides
@@ -117,6 +116,7 @@ post '/newScript' do
       line = Line.create!(
         scripts_id: script.id,
         contributors_id: Contributor.where(scripts_id: script.id).first.id,
+        order_num: i,
         body: ""
       )
     end
@@ -161,15 +161,13 @@ get '/edit/:id' do
 end
 
 get '/update/:id/auto-save' do
+  line = Line.find(params[:id])
   if params[:role_body] == 'role'
-    line = Line.find(params[:id]).contributors_id
-    line.review = Contributor.find_by(name: params[:input_value]).id
-    line.save
+    line.contributors_id = Contributor.find_by(name: params[:input_value]).id
   elsif params[:role_body] == 'body'
-    line = Line.find(params[:id]).body
-    line.review = params[:input_value]
-    line.save
+    line.body = params[:input_value]
   end
+  line.save
 end
 
 def getPresentationId(url)

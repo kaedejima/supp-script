@@ -5,7 +5,7 @@
     <% @presentation_id = @script.presentation_id  %>
     <p>Presentation ID: <%= @presentation_id %></p>
     <p><%= @presentation.slides.count %> slides</p>
-    <a href="/update/<%= @script.id %>" ><button>BACK</button></a>
+    <a href="/view/<%= @script.id %>" ><button>FINISH EDIT</button></a>
     <a href="/update/<%= @script.id %>" id="id_link"></a>
     <h4>CONTRIBUTORS(<%= @contributors.count %>)</h4>
     <% @contributors.each do |contributor| %>
@@ -25,14 +25,16 @@
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
           <tr>
-            <td><%= line.id %></td>
+            <td><%= line.order_num+1 %></td>
             <td><img src="<%= @thumbnails[i] %>"></img></td>
-            <td><select name="role" class="auto-save role" id="<%= line.id %>">
+            <td><select name="role" class="auto-save role" id="<%= line.order_num %>">
               <% @contributors.each do |contributor| %>
                 <option value="<%= contributor.name %>"><%= contributor.name %></option>
               <% end %>
             </select></td>
-            <td><input type="text" class="auto-save body" id="<%= line.id %>"><%= line.body %></input></td>
+            <td>
+              <input type="text" class="auto-save body" id="<%= line.order_num %>" value="<%= line.body %>">
+            </td>
           </tr>
         <% end %>
 			</tbody>

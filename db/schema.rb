@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_122849) do
+ActiveRecord::Schema.define(version: 2020_10_07_044042) do
 
   create_table "contributors", force: :cascade do |t|
     t.string "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_122849) do
     t.integer "scripts_id"
     t.integer "contributors_id"
     t.string "body"
+    t.integer "order_num"
     t.index ["contributors_id"], name: "index_lines_on_contributors_id"
     t.index ["scripts_id"], name: "index_lines_on_scripts_id"
   end
