@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
-require 'pry' if development?
+# require 'pry' if development?
 require 'sinatra/activerecord'
 require './models.rb'
 require './googleslide.rb'
@@ -54,17 +54,6 @@ post '/signin' do
   user = User.find_by(name: params[:name])
   if user && user.authenticate(params[:password])
     session[:user] = user.id
-    # scripts = Script.where(user_id: current_user.id)
-    # scripts.each do |script|
-    #   presentation = service.get_presentation(script.presentation_id)
-    #   presentation.slides.each_with_index do |slide, i|
-    #     service.get_presentation_page_thumbnail(
-    #       script.presentation_id,
-    #       slide.object_id_prop,
-    #       thumbnail_properties_thumbnail_size: 'SMALL')
-    #   end
-    # end
-    # サインインした時に、そのユーザーが持っているスクリプトをもう一度読み込んでサムネを有効にする必要がある。
   end
   redirect '/'
 end
@@ -73,7 +62,6 @@ post '/getSlide' do
   if params[:slide_url]
     url = params[:slide_url]
     presentation_id = getPresentationId(url)
-    # binding.pry
   end
   redirect '/'
 end
@@ -98,7 +86,6 @@ post '/newScript' do
       keyword: params[:keyword],
       presentation_id: presentation_id
     )
-    # binding.pry
     ctbt_count.times do |i|
       param_name = 'ctbt_'+ i.to_s
       name = params[param_name]
