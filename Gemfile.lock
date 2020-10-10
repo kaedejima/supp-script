@@ -126,6 +126,7 @@ DEPENDENCIES
   debase
   fastri
   google-api-client (~> 0.34)
+  googleauth
   pg (= 0.21.0)
   pry
   rake
@@ -137,9 +138,6 @@ DEPENDENCIES
   sinatra-activerecord
   sinatra-contrib
   sqlite3 (~> 1.4.1)
-
-RUBY VERSION
-   ruby 2.6.2p47
 
 BUNDLED WITH
    2.0.2
