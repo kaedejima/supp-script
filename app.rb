@@ -54,6 +54,16 @@ post '/signin' do
   user = User.find_by(name: params[:name])
   if user && user.authenticate(params[:password])
     session[:user] = user.id
+    # scripts = Script.where(user_id: current_user.id)
+    # scripts.each do |script|
+    #   presentation = service.get_presentation(script.presentation_id)
+    #   presentation.slides.each_with_index do |slide, i|
+    #     service.get_presentation_page_thumbnail(
+    #       script.presentation_id,
+    #       slide.object_id_prop,
+    #       thumbnail_properties_thumbnail_size: 'SMALL')
+    #   end
+    # end
     # サインインした時に、そのユーザーが持っているスクリプトをもう一度読み込んでサムネを有効にする必要がある。
   end
   redirect '/'
@@ -126,6 +136,14 @@ get '/view/:id' do
   @lines = Line.where(scripts_id: params[:id])
   @contributors = Contributor.where(scripts_id: params[:id])
   @presentation = service.get_presentation(@script.presentation_id)
+  @thumbnails = Array[]
+  @presentation.slides.each_with_index do |slide, i|
+    @thumbnails.push(service.get_presentation_page_thumbnail(
+      @script.presentation_id,
+      slide.object_id_prop,
+      thumbnail_properties_thumbnail_size: 'SMALL')
+      .content_url)
+  end
   erb :view
 end
 
@@ -134,6 +152,14 @@ get '/edit/:id' do
   @lines = Line.where(scripts_id: params[:id])
   @contributors = Contributor.where(scripts_id: params[:id])
   @presentation = service.get_presentation(@script.presentation_id)
+  @thumbnails = Array[]
+  @presentation.slides.each_with_index do |slide, i|
+    @thumbnails.push(service.get_presentation_page_thumbnail(
+      @script.presentation_id,
+      slide.object_id_prop,
+      thumbnail_properties_thumbnail_size: 'SMALL')
+      .content_url)
+  end
   erb :edit
 end
 

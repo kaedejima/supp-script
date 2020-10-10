@@ -17,7 +17,7 @@ end
 
 class Script < ActiveRecord::Base
   validates :title,
-    presence: trues
+    presence: true
   validates :description,
     presence: true
   validates :keyword,

@@ -33,7 +33,7 @@ $(document).ready(function () {
         input_value: input_value
       },
       datatype: 'json'
-    })
+    });
     // alert('saved' + input_value);
   });
 });

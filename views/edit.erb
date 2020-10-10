@@ -1,4 +1,4 @@
-<section>
+<section class="container">
   <% if !current_user.nil? %>
     <h2>TITLE: <%= @script.title %></h2>
     <h4>DESCRIPTION: <%= @script.description %></h4>
@@ -13,27 +13,27 @@
     <% end %>
   <% end %>
   <div>
-		<table>
-			<thead>
-				<tr>
-					<th>Num</th>
-          <th>Thumbnail</th>
-					<th>Role</th>
-					<th>Line</th>
+		<table class="table">
+			<thead class="bg-brown">
+				<tr class="row">
+					<th class="col-lg-1">Num</th>
+          <th class="col-lg-3">Thumbnail</th>
+					<th class="col-lg-1">Role</th>
+					<th class="col-lg-7">Line</th>
 				</tr>
 			</thead>
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
-          <tr>
-            <td><%= line.order_num+1 %></td>
-            <td><img src="<%= line.thumbnail_url %>"></img></td>
-            <td><select name="role" class="auto-save role" id="<%= line.order_num %>">
+          <tr class="row">
+            <td class="col-lg-1"><%= line.order_num+1 %></td>
+            <td class="col-lg-3"><img src="<%= @thumbnails[i] %>"></img></td>
+            <td class="col-lg-1"><select name="role" class="auto-save role" id="<%= line.order_num %>">
               <% @contributors.each do |contributor| %>
                 <option value="<%= contributor.name %>"><%= contributor.name %></option>
               <% end %>
             </select></td>
-            <td>
-              <input type="text" class="auto-save body" id="<%= line.order_num %>" value="<%= line.body %>">
+            <td class="col-lg-7">
+              <input type="textarea" class="auto-save body" id="<%= line.order_num %>" value="<%= line.body %>">
             </td>
           </tr>
         <% end %>
