@@ -4,11 +4,11 @@ source "https://rubygems.org"
 gem 'rake'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'activerecord' ,  '5.2.3'
+gem 'activerecord' , '5.2.3'
 gem 'sinatra-activerecord'
 gem 'bcrypt'
 
-gem 'googleauth'
+# gem 'googleauth'
 gem 'google-api-client', '~> 0.34'
 
 group :development do
