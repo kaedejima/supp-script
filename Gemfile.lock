@@ -126,7 +126,6 @@ DEPENDENCIES
   debase
   fastri
   google-api-client (~> 0.34)
-  googleauth
   pg (= 0.21.0)
   pry
   rake
