@@ -8,6 +8,8 @@ gem 'activerecord' , '5.2.3'
 gem 'sinatra-activerecord'
 gem 'bcrypt'
 
+gem 'rack'
+
 gem 'googleauth'
 gem 'google-api-client', '~> 0.34'
 
