@@ -134,6 +134,7 @@ DEPENDENCIES
   googleauth
   pg (= 0.21.0)
   pry
+  rack
   rake
   rcodetools
   rubocop
