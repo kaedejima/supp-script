@@ -4,7 +4,8 @@ body {
   font-family: "Roboto";
 }
 
-h1 {
+h1,
+.use-font {
   font-family: 'Pacifico',
     cursive;
 }
@@ -72,6 +73,10 @@ a.bg-yel:hover {
   padding: 10px 20px !important;
   border-radius: 15px;
   font-size: 1rem;
+}
+
+table .btn-like {
+  width: 100%;
 }
 
 .brown-box {

@@ -16,6 +16,9 @@
 					</div>
 				</form>
 			<div>
+			<div class="how-to title-section">
+				<h2>How to use <span class="use-font">suPPscript</span></h2>
+			</div>
 		<% else %>
 			<div class="title-section">
 				<h2><%= current_user.name %>'s Scripts  <span class="badge badge-pill badge-color"><%= @scripts.count %></span> </h2>
@@ -27,7 +30,7 @@
 							<th>TITLE</th>
 							<th>Description</th>
 							<th>Contributors</th>
-							<th>Keyword</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -42,7 +45,10 @@
 											<p><%= contributor.name %></p>
 										<% end %>
 									</td>
-									<td><%= script.keyword %></td>
+									<td>
+									<p><a href="/edit/<%= script.id %>"><button class="bg-red btn-like">EDIT</button></a></p>
+									<p><a class="delete-btn" id ="/delete/<%= script.id %>"><button class="bg-brown btn-like">DELETE</button></a></p>
+									</td>
 								</tr>
 							<% end %>
 						<% end %>

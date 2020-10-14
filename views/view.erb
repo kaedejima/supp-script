@@ -1,12 +1,12 @@
 <section class="container">
   <div class="title-section">
     <% if !current_user.nil? %>
-      <h2><%= @script.title %>  <a href="/edit/<%= @script.id %>"><button class="bg-red btn-like">EDIT</button></a></h2>
+      <h2><%= @script.title %>  <a href="/edit/<%= @script.id %>"><button class="bg-red btn-like">EDIT</button></a>  <a class="delete-btn" id ="/delete/<%= @script.id %>"><button class="bg-brown btn-like">DELETE</button></a>  </h2>
       <p><%= @script.description %></p>
       <p>Members <span class="badge badge-pill badge-color"><%= @contributors.count %></span> :
         <span>
           <% @contributors.each do |contributor| %>
-            <span class="badge badge-pill
+            <span class="
             <% if contributor.id.remainder(6) == 0 %>
               ctbt-6
             <% elsif contributor.id.remainder(5) == 0 %>
@@ -20,7 +20,7 @@
             <% else %>
               ctbt-1
             <% end %>
-            "><%= contributor.name %></span>
+            ctbt badge badge-pill"><%= contributor.name %></span>
           <% end %>
         </span>
       </p>
@@ -53,7 +53,7 @@
           <% else %>
             ctbt-1
           <% end %>
-          %">
+          ">
             <td class="col-1"><%= line.order_num+1 %></td>
             <td class="col-3"><img src="<%= @thumbnails[i] %>"></img></td>
             <td class="col-1"><p><%= Contributor.find(line.contributors_id).name %></p></td>

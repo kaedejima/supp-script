@@ -13,6 +13,10 @@ service.authorization = authorize
 
 enable :sessions
 
+before do
+  Dotenv.load
+end
+
 helpers do
   def current_user
     User.find_by(id: session[:user])
@@ -77,6 +81,7 @@ end
 
 post '/newScript' do
   if !current_user.nil?
+    ctbt_arr = Array.new
     url = params[:presentation_url]
     presentation_id = getPresentationId(url)
     ctbt_original = params[:ctbt]
@@ -89,8 +94,6 @@ post '/newScript' do
       presentation_id: presentation_id
     )
     ctbt_arr.each do |ctbt|
-      # param_name = 'ctbt_'+ i.to_s
-      # name = params[param_name]
       contributor = Contributor.create!(
         name: ctbt,
         scripts_id: script.id
@@ -169,6 +172,12 @@ get '/cardview' do
   elsif
     redirect '/'
   end
+end
+
+get '/delete/:id' do
+  script = Script.find(params[:id])
+  script.destroy
+  redirect '/'
 end
 
 def getPresentationId(url)

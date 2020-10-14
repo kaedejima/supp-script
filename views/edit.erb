@@ -1,13 +1,13 @@
 <section class="container">
   <div class="title-section">
     <% if !current_user.nil? %>
-      <h2><%= @script.title %>  <a href="/view/<%= @script.id %>" ><button class="bg-red btn-like">FINISH EDIT</button></a></h2>
+      <h2><%= @script.title %>  <a href="/view/<%= @script.id %>" ><button class="bg-red btn-like">FINISH EDIT</button></a>  <a class="delete-btn" id ="/delete/<%= @script.id %>">  </h2>
       <a href="/update/<%= @script.id %>" id="id_link"></a>
       <p><%= @script.description %></p>
       <p>Members <span class="badge badge-pill badge-color"><%= @contributors.count %></span> :
-        <span>
+        <span class="member-name">
           <% @contributors.each do |contributor| %>
-            <span class="badge badge-pill
+            <span class="
             <% if contributor.id.remainder(6) == 0 %>
               ctbt-6
             <% elsif contributor.id.remainder(5) == 0 %>
@@ -21,7 +21,7 @@
             <% else %>
               ctbt-1
             <% end %>
-            "><%= contributor.name %></span>
+            badge badge-pill"><%= contributor.name %></span>
           <% end %>
         </span>
       </p>
@@ -40,21 +40,7 @@
 			</thead>
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
-          <tr class="row
-          <% if line.contributors_id.remainder(6) == 0 %>
-            ctbt-6
-          <% elsif line.contributors_id.remainder(5) == 0 %>
-            ctbt-5
-          <% elsif line.contributors_id.remainder(4) == 0 %>
-            ctbt-4
-          <% elsif line.contributors_id.remainder(3) == 0 %>
-            ctbt-3
-          <% elsif line.contributors_id.remainder(2) == 0 %>
-            ctbt-2
-          <% else %>
-            ctbt-1
-          <% end %>
-          %">
+          <tr class="row">
             <td class="col-1"><%= line.order_num+1 %></td>
             <td class="col-3"><img src="<%= @thumbnails[i] %>"></img></td>
             <td class="col-1"><select name="role" class="auto-save role" id="<%= line.order_num %>">
@@ -67,7 +53,7 @@
               <% end %>
             </select></td>
             <td class="col-7">
-              <textarea class="auto-save body" id="<%= line.order_num %>"><%= line.body %></textarea>
+              <textarea rows="4" cols="42" class="auto-save body" id="<%= line.order_num %>"><%= line.body %></textarea>
             </td>
           </tr>
         <% end %>
