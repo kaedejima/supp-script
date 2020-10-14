@@ -5,6 +5,7 @@ require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require './models.rb'
 require './googleslide.rb'
+require 'dotenv/load'
 
 service = Google::Apis::SlidesV1::SlidesService.new
 service.client_options.application_name = APPLICATION_NAME

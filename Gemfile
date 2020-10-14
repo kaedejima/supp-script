@@ -9,6 +9,7 @@ gem 'sinatra-activerecord'
 gem 'bcrypt'
 
 gem 'rack'
+gem 'dotenv'
 
 gem 'googleauth'
 gem 'google-api-client', '~> 0.34'
