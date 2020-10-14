@@ -20,6 +20,7 @@ GEM
     concurrent-ruby (1.1.7)
     declarative (0.0.20)
     declarative-option (0.1.0)
+    dotenv (2.7.6)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     google-api-client (0.46.0)
@@ -99,6 +100,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (= 5.2.3)
   bcrypt
+  dotenv
   google-api-client (~> 0.34)
   googleauth
   pg (= 0.21.0)
