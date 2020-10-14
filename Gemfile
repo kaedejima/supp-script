@@ -15,13 +15,7 @@ gem 'google-api-client', '~> 0.34'
 
 group :development do
   gem 'sqlite3', '~>1.4.1'
-  gem 'debase'
   gem 'pry'
-  gem 'rubocop'
-  gem 'rubocop-performance'
-  gem 'ruby-debug-ide'
-  gem 'rcodetools'
-  gem 'fastri'
 end
 
 group :production do

@@ -15,19 +15,19 @@
 		<table class="table">
 			<thead class="brown-box">
 				<tr class="row">
-					<th class="col-lg-1">Num</th>
-          <th class="col-lg-3">Thumbnail</th>
-					<th class="col-lg-1">Role</th>
-					<th class="col-lg-7">Line</th>
+					<th class="col-sm-1">Num</th>
+          <th class="col-sm-3">Thumbnail</th>
+					<th class="col-sm-1">Role</th>
+					<th class="col-sm-7">Line</th>
 				</tr>
 			</thead>
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
           <tr class="row">
-            <td class="col-lg-1"><%= line.order_num+1 %></td>
-            <td class="col-lg-3"><img src="<%= @thumbnails[i] %>"></img></td>
-            <td class="col-lg-1"><p><%= Contributor.find(line.contributors_id).name %></p></td>
-            <td class="col-lg-7"><%= line.body %></td>
+            <td class="col-sm-1"><%= line.order_num+1 %></td>
+            <td class="col-sm-3"><img src="<%= @thumbnails[i] %>"></img></td>
+            <td class="col-sm-1"><p><%= Contributor.find(line.contributors_id).name %></p></td>
+            <td class="col-sm-7"><%= line.body %></td>
           </tr>
         <% end %>
 			</tbody>
