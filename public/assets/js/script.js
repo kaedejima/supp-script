@@ -1,19 +1,5 @@
-var idNo = 1;
 window.onload = function load() {
-  // idNo = 1;
 }
-$(function () {
-  $(document).on("click", ".add", function () {
-    $(this).parent().clone(true)
-      .removeAttr("id")
-      .removeClass("notDisp")
-      .find("input[name=ctbt_0]")
-      .attr("name", "ctbt_" + idNo.toString())
-      .end()
-      .insertAfter($(this).parent());
-    idNo++;
-  });
-});
 
 $(document).ready(function () {
   $(".auto-save").blur(function (a) {

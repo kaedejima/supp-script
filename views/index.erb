@@ -17,8 +17,8 @@
 				</form>
 			<div>
 		<% else %>
-			<div>
-				<h2><%= current_user.name %>'s Scripts</h2>
+			<div class="title-section">
+				<h2><%= current_user.name %>'s Scripts  <span class="badge badge-pill badge-color"><%= @scripts.count %></span> </h2>
 			</div>
 			<div>
 				<table class="table">

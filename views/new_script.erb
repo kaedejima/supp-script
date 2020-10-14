@@ -1,6 +1,6 @@
-<section>
+<section class="new-script">
 	<div class="brown-box">
-		<h3>Create New Scipt!</h3>
+		<h3>Create New Scipt!</h3><br>
 		<form action="/newScript" name="NEWSCRIPT" method="post">
 			<%# <label for="title">Title of your script</label> %>
 			<input type="text" name="title" placeholder="Title of your scipt"><br>
@@ -12,8 +12,7 @@
 			<input type="text" name="presentation_url" placeholder="URL of your googleslide"><br>
 			<div id="input_pluralBox">
 				<div id="input_plural">
-					<input type="text" name="ctbt_0" class="ctbt" placeholder="Add contributor">
-					<input type="button" value="＋" class="add pluralBtn">
+					<input type="text" name="ctbt" class="ctbt" placeholder="member 1, menber2 , (insert ',' between names)">
 				</div>
 			</div>
 			<input type="submit" id="new-script" value="CREATE">

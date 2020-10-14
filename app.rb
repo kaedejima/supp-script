@@ -76,9 +76,10 @@ end
 
 post '/newScript' do
   if !current_user.nil?
-    ctbt_count = params[:ctbt_count].to_i
     url = params[:presentation_url]
     presentation_id = getPresentationId(url)
+    ctbt_original = params[:ctbt]
+    ctbt_arr = ctbt_original.split(",", -1)
     script = Script.create!(
       user_id: current_user.id,
       title: params[:title],
@@ -86,11 +87,11 @@ post '/newScript' do
       keyword: params[:keyword],
       presentation_id: presentation_id
     )
-    ctbt_count.times do |i|
-      param_name = 'ctbt_'+ i.to_s
-      name = params[param_name]
+    ctbt_arr.each do |ctbt|
+      # param_name = 'ctbt_'+ i.to_s
+      # name = params[param_name]
       contributor = Contributor.create!(
-        name: name,
+        name: ctbt,
         scripts_id: script.id
       )
     end
@@ -115,7 +116,7 @@ post '/newScript' do
       )
     end
   end
-  redirect '/'
+  redirect "/view/#{script.id}"
 end
 
 get '/view/:id' do

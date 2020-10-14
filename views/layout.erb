@@ -30,14 +30,14 @@
   <div class="">
     <a href="/" class="navbar-brand bg-brown"><h1>suPPscript</h1></a>
   </div>
-  <div class="">
+  <div class="justify-content-end">
     <ul class="nav navbar-nav">
       <% if !current_user.nil? %>
-        <li class="navbar-item"><span><a href='/' class="nav-link bg-brown">Hi, <%= current_user.name %></a></span></li>
+        <li class="navbar-item"><span class="nav-link bg-brown">Hi, <%= current_user.name %></span></li>
         <li class="navbar-item"><span><a href="/signout" class="nav-link bg-brown">Logout</a></span></li>
-        <li class="navbar-item"><span><a href="/newScript" class="nav-link bg-red">New Script</a></span></li>
+        <li class="navbar-item"><span><a href="/newScript" class="nav-link bg-yel btn-like"> +Script </a></span></li>
       <% else %>
-        <li class="navbar-item"><span><a href="/signup" class="nav-link bg-red">Sing Up</a></span></li>
+        <li class="navbar-item"><span><a href="/signup" class="nav-link bg-yel btn-like">Sing Up</a></span></li>
       <% end %>
     </ul>
   </div>

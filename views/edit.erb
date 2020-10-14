@@ -1,39 +1,73 @@
 <section class="container">
-  <% if !current_user.nil? %>
-    <h2>TITLE: <%= @script.title %></h2>
-    <h4>DESCRIPTION: <%= @script.description %></h4>
-    <% @presentation_id = @script.presentation_id  %>
-    <p>Presentation ID: <%= @presentation_id %></p>
-    <p><%= @presentation.slides.count %> slides</p>
-    <a href="/view/<%= @script.id %>" ><button>FINISH EDIT</button></a>
-    <a href="/update/<%= @script.id %>" id="id_link"></a>
-    <h4>CONTRIBUTORS <span class="badge"><%= @contributors.count %></span> </h4>
-    <% @contributors.each do |contributor| %>
-      <p><%= contributor.name %></p>
+  <div class="title-section">
+    <% if !current_user.nil? %>
+      <h2><%= @script.title %>  <a href="/view/<%= @script.id %>" ><button class="bg-red btn-like">FINISH EDIT</button></a></h2>
+      <a href="/update/<%= @script.id %>" id="id_link"></a>
+      <p><%= @script.description %></p>
+      <p>Members <span class="badge badge-pill badge-color"><%= @contributors.count %></span> :
+        <span>
+          <% @contributors.each do |contributor| %>
+            <span class="badge badge-pill
+            <% if contributor.id.remainder(6) == 0 %>
+              ctbt-6
+            <% elsif contributor.id.remainder(5) == 0 %>
+              ctbt-5
+            <% elsif contributor.id.remainder(4) == 0 %>
+              ctbt-4
+            <% elsif contributor.id.remainder(3) == 0 %>
+              ctbt-3
+            <% elsif contributor.id.remainder(2) == 0 %>
+              ctbt-2
+            <% else %>
+              ctbt-1
+            <% end %>
+            "><%= contributor.name %></span>
+          <% end %>
+        </span>
+      </p>
+      <p><%= @presentation.slides.count %> slides</p>
     <% end %>
-  <% end %>
+  </div>
   <div>
 		<table class="table">
-			<thead class="bg-brown">
-				<tr class="row">
-					<th class="col-lg-1">Num</th>
-          <th class="col-lg-3">Thumbnail</th>
-					<th class="col-lg-1">Role</th>
-					<th class="col-lg-7">Line</th>
+			<thead>
+				<tr class="row bg-brown">
+					<th class="col-1">#</th>
+          <th class="col-3">Thumbnail</th>
+					<th class="col-1">Role</th>
+					<th class="col-7">Line</th>
 				</tr>
 			</thead>
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
-          <tr class="row">
-            <td class="col-lg-1"><%= line.order_num+1 %></td>
-            <td class="col-lg-3"><img src="<%= @thumbnails[i] %>"></img></td>
-            <td class="col-lg-1"><select name="role" class="auto-save role" id="<%= line.order_num %>">
+          <tr class="row
+          <% if line.contributors_id.remainder(6) == 0 %>
+            ctbt-6
+          <% elsif line.contributors_id.remainder(5) == 0 %>
+            ctbt-5
+          <% elsif line.contributors_id.remainder(4) == 0 %>
+            ctbt-4
+          <% elsif line.contributors_id.remainder(3) == 0 %>
+            ctbt-3
+          <% elsif line.contributors_id.remainder(2) == 0 %>
+            ctbt-2
+          <% else %>
+            ctbt-1
+          <% end %>
+          %">
+            <td class="col-1"><%= line.order_num+1 %></td>
+            <td class="col-3"><img src="<%= @thumbnails[i] %>"></img></td>
+            <td class="col-1"><select name="role" class="auto-save role" id="<%= line.order_num %>">
               <% @contributors.each do |contributor| %>
-                <option value="<%= contributor.name %>"><%= contributor.name %></option>
+                <option value="<%= contributor.name %>"
+                <% if contributor.name == Contributor.find(line.contributors_id).name %>
+                 selected
+                <% end %>
+                ><%= contributor.name %></option>
               <% end %>
             </select></td>
-            <td class="col-lg-7">
-              <input type="textarea" class="auto-save body" id="<%= line.order_num %>" value="<%= line.body %>">
+            <td class="col-7">
+              <textarea class="auto-save body" id="<%= line.order_num %>"><%= line.body %></textarea>
             </td>
           </tr>
         <% end %>

@@ -1,33 +1,63 @@
 <section class="container">
-  <% if !current_user.nil? %>
-    <h2>TITLE: <%= @script.title %></h2>
-    <h4>DESCRIPTION: <%= @script.description %></h4>
-    <p>Presentation ID: <%= @script.presentation_id %></p>
-    <p><%= @presentation.slides.count %> slides</p>
-    <a href="/edit/<%= @script.id %>"><button>EDIT</button></a>
-    <h4>CONTRIBUTORS <span class="badge"><%= @contributors.count %></span> </h4>
-    <% @contributors.each do |contributor| %>
-      <p><%= contributor.name %></p>
+  <div class="title-section">
+    <% if !current_user.nil? %>
+      <h2><%= @script.title %>  <a href="/edit/<%= @script.id %>"><button class="bg-red btn-like">EDIT</button></a></h2>
+      <p><%= @script.description %></p>
+      <p>Members <span class="badge badge-pill badge-color"><%= @contributors.count %></span> :
+        <span>
+          <% @contributors.each do |contributor| %>
+            <span class="badge badge-pill
+            <% if contributor.id.remainder(6) == 0 %>
+              ctbt-6
+            <% elsif contributor.id.remainder(5) == 0 %>
+              ctbt-5
+            <% elsif contributor.id.remainder(4) == 0 %>
+              ctbt-4
+            <% elsif contributor.id.remainder(3) == 0 %>
+              ctbt-3
+            <% elsif contributor.id.remainder(2) == 0 %>
+              ctbt-2
+            <% else %>
+              ctbt-1
+            <% end %>
+            "><%= contributor.name %></span>
+          <% end %>
+        </span>
+      </p>
+      <p><%= @presentation.slides.count %> slides</p>
     <% end %>
-
-  <% end %>
+  </div>
   <div>
 		<table class="table">
-			<thead class="brown-box">
-				<tr class="row">
-					<th class="col-sm-1">Num</th>
-          <th class="col-sm-3">Thumbnail</th>
-					<th class="col-sm-1">Role</th>
-					<th class="col-sm-7">Line</th>
+			<thead>
+				<tr class="row bg-brown">
+					<th class="col-1">#</th>
+          <th class="col-3">Thumbnail</th>
+					<th class="col-1">Role</th>
+					<th class="col-7">Line</th>
 				</tr>
 			</thead>
 			<tbody>
         <% @lines.each_with_index do |line, i| %>
-          <tr class="row">
-            <td class="col-sm-1"><%= line.order_num+1 %></td>
-            <td class="col-sm-3"><img src="<%= @thumbnails[i] %>"></img></td>
-            <td class="col-sm-1"><p><%= Contributor.find(line.contributors_id).name %></p></td>
-            <td class="col-sm-7"><%= line.body %></td>
+          <tr class="row
+          <% if line.contributors_id.remainder(6) == 0 %>
+            ctbt-6
+          <% elsif line.contributors_id.remainder(5) == 0 %>
+            ctbt-5
+          <% elsif line.contributors_id.remainder(4) == 0 %>
+            ctbt-4
+          <% elsif line.contributors_id.remainder(3) == 0 %>
+            ctbt-3
+          <% elsif line.contributors_id.remainder(2) == 0 %>
+            ctbt-2
+          <% else %>
+            ctbt-1
+          <% end %>
+          %">
+            <td class="col-1"><%= line.order_num+1 %></td>
+            <td class="col-3"><img src="<%= @thumbnails[i] %>"></img></td>
+            <td class="col-1"><p><%= Contributor.find(line.contributors_id).name %></p></td>
+            <td class="col-7"><%= line.body %></td>
           </tr>
         <% end %>
 			</tbody>

@@ -10,12 +10,16 @@ h1 {
 }
 
 nav {
-  height: 80px;
+  height: 90px;
   padding-top: 15px;
 }
 
 nav * {
   margin: 0px;
+}
+
+td {
+  vertical-align: middle !important;
 }
 
 .navbar-item {
@@ -25,20 +29,29 @@ nav * {
 .bg-brown {
   background-color: rgba(107, 100, 93);
   color: rgba(242, 242, 242);
+  border: none;
 }
 
 .bg-red {
   background-color: rgba(255, 105, 105);
   color: rgba(242, 242, 242);
+  border: none;
 }
 
 .bg-white {
   background-color: rgba(242, 242, 242);
   color: rgba(107, 100, 93);
+  border: none;
+}
+
+.bg-yel {
+  background-color: rgba(255, 203, 45);
+  color: rgba(107, 100, 93);
+  border: none;
 }
 
 a.bg-brown:hover {
-  color: #ffcb2d !important;
+  color: rgba(255, 203, 45) !important;
 }
 
 a.bg-red:hover {
@@ -49,17 +62,23 @@ a.bg-white:hover {
   color: rgba(255, 105, 105);
 }
 
+a.bg-yel:hover {
+  background-color: rgba(255, 105, 105);
+  color: rgba(242, 242, 242);
+}
 
-nav .bg-red {
+
+.btn-like {
   padding: 10px 20px !important;
   border-radius: 15px;
+  font-size: 1rem;
 }
 
 .brown-box {
   background-color: rgba(107, 100, 93);
   color: rgba(242, 242, 242);
   min-width: 300px;
-  max-width: 500px;
+  max-width: 600px;
   margin: 30px auto;
   padding: 30px;
   border-radius: 20px;
@@ -67,7 +86,7 @@ nav .bg-red {
 }
 
 ::placeholder {
-  color: rgba(242, 242, 242);
+  color: rgba(242, 242, 242, 0.702);
 }
 
 .brown-box h1 {
@@ -78,12 +97,12 @@ nav .bg-red {
 .brown-box input {
   background-color: rgba(107, 100, 93);
   color: rgba(242, 242, 242);
-  width: 300px;
+  width: 80%;
   border: none;
   box-shadow: inset 0px 2px 2px 3px rgba(75, 67, 59, .3);
   border-radius: 5px;
   padding: 10px 20px;
-  /* border-bottom: solid 2px #ffcb2d; */
+  /* border-bottom: solid 2pxrgba(255,203,45); */
   margin-bottom: 20px;
 }
 
@@ -91,10 +110,6 @@ nav .bg-red {
   width: auto;
   box-shadow: inset 0px 2px 2px 3px rgba(75, 67, 59, .3);
 
-}
-
-.brown-box .ctbt {
-  width: 240px;
 }
 
 .brown-box input[type="submit"] {
@@ -115,4 +130,38 @@ nav .bg-red {
   border: none;
   box-shadow: 2px 2px 10px 2px rgba(107, 100, 93, 0.1);
   float: left;
+}
+
+.title-section {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.badge-color {
+  background-color: rgba(107, 100, 93);
+  color: rgba(242, 242, 242);
+}
+
+.ctbt-1 {
+  background-color: rgba(255, 154, 162, 1);
+}
+
+.ctbt-2 {
+  background-color: rgba(199, 206, 234, 1);
+}
+
+.ctbt-3 {
+  background-color: rgba(255, 218, 193, 1);
+}
+
+.ctbt-4 {
+  background-color: rgba(181, 234, 215, 1);
+}
+
+.ctbt-5 {
+  background-color: rgba(255, 255, 216, 1);
+}
+
+.ctbt-6 {
+  background-color: rgba(237, 254, 254, 1);
 }
