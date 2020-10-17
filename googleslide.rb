@@ -5,13 +5,16 @@ require "fileutils"
 
 require 'dotenv/load'
 require "json"
+require 'open-uri'
+require 'yaml'
 
 Dotenv.load
 
 OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
 APPLICATION_NAME = "Google Slides API Ruby Quickstart".freeze
-CREDENTIALS_PATH = "credentials.json".freeze
-# ENV['GOOGLE_APPLICATION_CREDENTIALS']# "credentials.json".freeze
+CREDENTIALS_PATH = JSON.load(ENV['GOOGLE_APPLICATION_CREDENTIALS'])
+# puts CREDENTIALS_PATH.class
+# CREDENTIALS_PATH = "credentials.json".freeze
 # The file token.yaml stores the user's access and refresh tokens, and is
 # created automatically when the authorization flow completes for the first
 # time.
@@ -26,11 +29,16 @@ SCOPE = Google::Apis::SlidesV1::AUTH_PRESENTATIONS_READONLY
 #
 # @return [Google::Auth::UserRefreshCredentials] OAuth2 credentials
 def authorize
-  client_id = Google::Auth::ClientId.from_file CREDENTIALS_PATH
+  client_id = Google::Auth::ClientId.new CREDENTIALS_PATH['installed']['client_id'], CREDENTIALS_PATH['installed']['client_secret']
+  # CREDENTIALS_PATH['installed']['client_id'] # Google::Auth::ClientId.from_file CREDENTIALS_PATH
+  puts client_id
   token_store = Google::Auth::Stores::FileTokenStore.new file: TOKEN_PATH
   authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store
   user_id = "default"
   credentials = authorizer.get_credentials user_id
+  puts credentials.class
+  puts credentials
+
   if credentials.nil?
     url = authorizer.get_authorization_url base_url: OOB_URI
     puts "Open the following URL in the browser and enter the " \
