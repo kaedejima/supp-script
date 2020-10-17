@@ -8,6 +8,9 @@ require "json"
 require 'open-uri'
 require 'yaml'
 
+# Please copy this code, switch to your application and paste it there:
+# 4/1AfDhmrh_AaB20JdpgxIgufxYEQnEzZtKAJ-HjY2Uf9WHJ0H9AFo5a8bsoHw
+
 Dotenv.load
 
 OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
@@ -31,19 +34,16 @@ SCOPE = Google::Apis::SlidesV1::AUTH_PRESENTATIONS_READONLY
 def authorize
   client_id = Google::Auth::ClientId.new CREDENTIALS_PATH['installed']['client_id'], CREDENTIALS_PATH['installed']['client_secret']
   # CREDENTIALS_PATH['installed']['client_id'] # Google::Auth::ClientId.from_file CREDENTIALS_PATH
-  puts client_id
   token_store = Google::Auth::Stores::FileTokenStore.new file: TOKEN_PATH
   authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store
   user_id = "default"
   credentials = authorizer.get_credentials user_id
-  puts credentials.class
-  puts credentials
 
   if credentials.nil?
     url = authorizer.get_authorization_url base_url: OOB_URI
     puts "Open the following URL in the browser and enter the " \
          "resulting code after authorization:\n" + url
-    code = "4/4wF43OGk9B8zTSrva6Gpmgxx5EpqiZQmD934c-y8znUonoTiyU6ntKA" # gets
+    code = "4/1AfDhmrh_AaB20JdpgxIgufxYEQnEzZtKAJ-HjY2Uf9WHJ0H9AFo5a8bsoHw" # "4/4wF43OGk9B8zTSrva6Gpmgxx5EpqiZQmD934c-y8znUonoTiyU6ntKA" # gets
     credentials = authorizer.get_and_store_credentials_from_code(
       user_id: user_id, code: code, base_url: OOB_URI
     )
