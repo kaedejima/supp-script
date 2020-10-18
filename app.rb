@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
-# require 'pry' if development?
+require 'pry' if development?
 require 'sinatra/activerecord'
 require './models.rb'
 require './googleslide.rb'
@@ -81,11 +81,12 @@ end
 
 post '/newScript' do
   if !current_user.nil?
-    ctbt_arr = Array.new
+    ctbt_arr = []
     url = params[:presentation_url]
     presentation_id = getPresentationId(url)
     ctbt_original = params[:ctbt]
-    ctbt_arr = ctbt_original.split(",", -1)
+    ctbt_arr = ctbt_original.split(/,/,)
+    # binding.pry
     script = Script.create!(
       user_id: current_user.id,
       title: params[:title],
@@ -102,15 +103,13 @@ post '/newScript' do
     # # get presentation slide count
     presentation = service.get_presentation(script.presentation_id)
     thumbnails = Array[]
-    presentation.slides.each_with_index do |slide, i|
-      thumbnails.push(service.get_presentation_page_thumbnail(
-        script.presentation_id,
-        slide.object_id_prop,
-        thumbnail_properties_thumbnail_size: 'SMALL')
-        .content_url)
-    end
     # # create lines for each slides
     presentation.slides.each_with_index do |page, i|
+      thumbnails.push(service.get_presentation_page_thumbnail(
+        script.presentation_id,
+        page.object_id_prop,
+        thumbnail_properties_thumbnail_size: 'SMALL')
+        .content_url)
       line = Line.create!(
         scripts_id: script.id,
         contributors_id: Contributor.where(scripts_id: script.id).first.id,

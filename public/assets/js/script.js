@@ -15,7 +15,7 @@ $(document).ready(function () {
     // for (let i = 0; i < member_name.length; i++){
     //   member_info.push([member_name[i].textContent, member_name[i].className.replace(/\r?\n|\r/g, "").split(/[ ]+/)[1]]);
     // }
-    console.log(member_info);
+    // console.log(member_info);
     console.log(url_id + "/auto-save");
     console.log("input val: " + input_value + '\n class: ' + element_class + '\n id: ' + element_id);
     // $.ajax({

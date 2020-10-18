@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :password,
    presence: true,
     length: { in: 5..10 }
-  has_many :scripts
+  has_many :scripts, dependent: :destroy
 end
 
 class Script < ActiveRecord::Base
@@ -22,7 +22,6 @@ class Script < ActiveRecord::Base
     presence: true
   validates :keyword,
     presence: true
-    # length: { in: 5..10 }
   validates :presentation_id,
     presence: true
   belongs_to :user
