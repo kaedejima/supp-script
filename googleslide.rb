@@ -43,7 +43,7 @@ def authorize
     url = authorizer.get_authorization_url base_url: OOB_URI
     puts "Open the following URL in the browser and enter the " \
          "resulting code after authorization:\n" + url
-    code = "4/5QEVfZE8CIVtzYfXNPkM7pcnVWlS6A-F8HXQvVzvL4VNgHiivQctdSY" # gets
+    code = "4/1AfDhmrjKqjOnmdD6-sGTL658hi6uc5qua8ylpFT5Hsow3LsDZk_vPF30HcU" # gets
     puts gets
     credentials = authorizer.get_and_store_credentials_from_code(
       user_id: user_id, code: code, base_url: OOB_URI
